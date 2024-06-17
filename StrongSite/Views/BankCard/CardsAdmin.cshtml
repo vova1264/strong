@@ -1,0 +1,168 @@
+﻿@model IEnumerable<StrongSite.Models.Cards>
+
+@if (User.IsInRole("Руководитель"))
+{
+    <div style="display: flex; margin: 15px 15px 0px 15px;">
+        <div class="me-auto">
+        </div>
+        <div class="form-check form-switch" style="padding: 6px 45px 6px 6px; ">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Показать удалённые</label>
+        </div>
+        <a class="btn btn-primary d-block" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCardsAdd" title="+ Добавить">+ Добавить</a>
+    </div>
+}
+<div class="container py-4 py-xl-5">
+    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+        @foreach (StrongSite.Models.Cards b in Model)
+        {
+            <div class="col @(b.DelitedCheck.ToString())" id="@(b.DelitedCheck.ToString())">
+                @if (User.IsInRole("Руководитель"))
+                {
+                    <a href="@Url.Action("CardsOpen", "Customer", new { id = b.Id })" class="card">
+                        <div class="card-body p-4">
+                            <div class="d-flex" style="margin-bottom: 15px;">
+                                <img class="flex-shrink-0 me-3 fit-cover" style="border-radius:5px" width="80" height="50" src="~/Resources/CardsImage/@b.Image">
+                                <div>
+                                    <p class="fw-bold mb-0">@b.Title</p>
+                                    <p class="text-muted mb-0">@b.BankName</p>
+                                </div>
+                            </div>
+                            <div style="height: 95px;">
+                                <p class="card-text">@b.DescriptionOne</p>
+                                <p class="card-text">@b.DescriptionTwo</p>
+                                <p class="card-text">@b.DescriptionThree</p>
+                                <p class="card-text">@b.DescriptionFour</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div style="display:flex;">
+                        @if (b.DelitedCheck == true)
+                        {
+                            <a class="btn btn-primary d-block w-100" style="margin:10px; width: 100%;" href="@Url.Action("RecoverCards", "BankCard", new { id = b.Id })" title="Задать сумму">
+                                Восстановить
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary d-block w-100" style="margin:10px; width: 100%;" href="@Url.Action("DeleteCards", "BankCard", new { id = b.Id })" title="Удалить">
+                                Удалить
+                            </a>
+                        }
+                        <a class="btn btn-primary d-block w-100" style="margin:10px; width: 100%;" href="@Url.Action("AmountRegistryAdd", "BankCard", new { id = b.Id })" title="Задать сумму">
+                            Задать сумму
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a href="#" class="card">
+                        <div class="card-body p-4">
+                            <div class="d-flex" style="margin-bottom: 15px;">
+                                <img class="flex-shrink-0 me-3 fit-cover" style="border-radius:5px" width="80" height="50" src="~/Resources/CardsImage/@b.Image">
+                                <div>
+                                    <p class="fw-bold mb-0">@b.Title</p>
+                                    <p class="text-muted mb-0">@b.BankName</p>
+                                </div>
+                            </div>
+                            <div style="height: 95px;">
+                                <p class="card-text">@b.DescriptionOne</p>
+                                <p class="card-text">@b.DescriptionTwo</p>
+                                <p class="card-text">@b.DescriptionThree</p>
+                                <p class="card-text">@b.DescriptionFour</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+
+    .True {
+        display: none;
+    }
+</style>
+
+<script>
+    function toggle() {
+        var div = document.querySelectorAll('[id="True"]');
+        if (this.checked) {
+            for (let line of div) {
+                line.style.display = 'block';
+            }
+        }
+        else {
+            for (let line of div) {
+                line.style.display = 'none';
+            }
+        }
+    }
+    document.getElementById('flexSwitchCheckDefault').onchange = toggle;
+</script>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModalCardsAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Добавление продукта</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            @using (Html.BeginForm("CardsAdd", "BankCard", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-coclor-black">Изображение</label>
+                        <input type="file" class="form-control" name="uploads">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="Title" placeholder="Название карты" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="BankName" placeholder="Название банка" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-coclor-black">Тип продукта</label>
+                        <select name="ProductType" class="form-select">
+                            <option value="Дебетовая карта">Дебетовая карта</option>
+                            <option value="Кредитная карта">Кредитная карта</option>
+                            <option value="Счёт РКО">Счёт РКО</option>
+                            <option value="Микрозайм">Микрозайм</option>
+                            <option value="Инвестиции">Инвестиции</option>
+                            <option value="Вклады">Вклады</option>
+                            <option value="Потребительский кредит">Потребительский кредит</option>
+                            <option value="Рефинансирование">Рефинансирование</option>
+                            <option value="Автокредит">Автокредит</option>
+                            <option value="Ипотека">Ипотека</option>
+                            <option value="Залоговый займ">Залоговый займ</option>
+                            <option value="Регистрация ИП, ООО">Регистрация ИП, ООО</option>
+                            <option value="Страхование">Страхование</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="DescriptionOne" placeholder="Описание 1" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="DescriptionTwo" placeholder="Описание 2" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="DescriptionThree" placeholder="Описание 3" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="DescriptionFour" placeholder="Описание 4" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

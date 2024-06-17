@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/Banner-Heading-Image-images.css">
+    <link rel="stylesheet" href="~/Content/assets/css/Navbar-Right-Links-Dark-icons.css">
+    <link rel="stylesheet" href="~/Content/assets/css/Pricing-Clean-badges.css">
+    <link rel="stylesheet" href="~/Content/assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
+    @if (Request.Cookies["theme"] == null)
+    {
+        <link href="~/Content/Light.css" rel="stylesheet" type="text/css" />
+    }
+    else
+    {
+        if (Request.Cookies["theme"].Value == "dark")
+        {
+            <link rel="stylesheet" href="~/Content/Dark.css">
+        }
+        if (Request.Cookies["theme"].Value == "light")
+        {
+            <link rel="stylesheet" href="~/Content/Light.css">
+        }
+    }
+    <title>@ViewBag.Title - Strong Group Company</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-body py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+                <img style="width: 50px;" class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2" src="~/favicon.ico" />
+                <span class="text-coclor" style="font-size: 25px; font-weight: bold;">Strong</span>
+            </a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="nav-item">@Html.ActionLink("Заявки", "CustomerRegistry", "Customer", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Продукты
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("Дебетовые карты", "Cards", "BankCard", new { tip = "Дебетовая карта" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Кредитные карты", "Cards", "BankCard", new { tip = "Кредитная карта" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Счёт РКО", "Cards", "BankCard", new { tip = "Счёт РКО" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Потребительские кредиты", "Cards", "BankCard", new { tip = "Потребительский кредит" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Микрозаймы", "Cards", "BankCard", new { tip = "Микрозайм" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Инвестиции", "Cards", "BankCard", new { tip = "Инвестиции" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Рефинансирование", "Cards", "BankCard", new { tip = "Рефинансирование" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Автокредиты", "Cards", "BankCard", new { tip = "Автокредит" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ипотека", "Cards", "BankCard", new { tip = "Ипотека" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Залоговые займы", "Cards", "BankCard", new { tip = "Залоговый займ" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Регистрация ИП, ООО", "Cards", "BankCard", new { tip = "Регистрация ИП, ООО" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Вклады", "Cards", "BankCard", new { tip = "Вклады" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Страхование", "Cards", "BankCard", new { tip = "Страхование" }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Карты
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("Дебетовые карты", "Cards", "BankCard", new { tip = "Дебетовая карта" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Кредитные карты", "Cards", "BankCard", new { tip = "Кредитная карта" }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Кредиты
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("Потребительские кредиты", "Cards", "BankCard", new { tip = "Потребительский кредит" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Рефинансирование", "Cards", "BankCard", new { tip = "Рефинансирование" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Автокредиты", "Cards", "BankCard", new { tip = "Автокредит" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ипотека", "Cards", "BankCard", new { tip = "Ипотека" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Залоговые займы", "Cards", "BankCard", new { tip = "Залоговый займ" }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Бизнес
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("Счёт РКО", "Cards", "BankCard", new { tip = "Счёт РКО" }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Регистрация ИП, ООО", "Cards", "BankCard", new { tip = "Регистрация ИП, ООО" }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">@Html.ActionLink("Инвестиции", "Cards", "BankCard", new { tip = "Инвестиции" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Вклады", "Cards", "BankCard", new { tip = "Вклады" }, new { @class = "nav-link" })</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

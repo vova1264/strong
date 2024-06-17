@@ -1,0 +1,87 @@
+﻿@model StrongSite.Models.Authentication.LoginModel
+
+@{
+    ViewBag.Title = "Вход";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Вход</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm(new { @class = "text-center sdfgdse" }))
+                        {
+                            <fieldset>
+                                <div class="mb-3">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "form-label" })
+                                </div>
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "form-label" })
+                                </div>
+                                <div class="mb-3">
+                                    <a class="text-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Подать заявку на регистрацию?
+                                    </a>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary d-block w-100" type="submit">Выполнить вход</button>
+                                </div>
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Оставить заявку</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            @using (Html.BeginForm("RequestsMessage", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="mb-3"><input class="form-control" type="text" id="name-2" name="UserName" placeholder="Ваше имя"></div>
+                    <div class="mb-3"><input class="form-control" type="tel" id="phone-2" name="Phone" placeholder="Ваш телефон"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<style>
+    li {
+        list-style-type: none;
+    }
+
+    ul {
+        padding: 0;
+    }
+</style>

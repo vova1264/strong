@@ -1,0 +1,168 @@
+﻿@model StrongSite.Models.References
+@{
+    ViewBag.Title = "Добавление ссылок";
+}
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Добавление ссылок</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("ReferenceAdd", "ReferenceCard", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+
+                            <div class="mb-3">
+                                <label class="form-label">Тип продукта</label>
+                                <select id="sadsadsadv" name="ProductType" class="form-select" oninput="fun3()">
+                                    <option value="Дебетовая карта">Дебетовая карта</option>
+                                    <option value="Кредитная карта">Кредитная карта</option>
+                                    <option value="Счёт РКО">Счёт РКО</option>
+                                    <option value="Микрозайм">Микрозайм</option>
+                                    <option value="Инвестиции">Инвестиции</option>
+                                    <option value="Вклады">Вклады</option>
+                                    <option value="Потребительский кредит">Потребительский кредит</option>
+                                    <option value="Рефинансирование">Рефинансирование</option>
+                                    <option value="Автокредит">Автокредит</option>
+                                    <option value="Ипотека">Ипотека</option>
+                                    <option value="Залоговый займ">Залоговый займ</option>
+                                    <option value="Регистрация ИП, ООО">Регистрация ИП, ООО</option>
+                                    <option value="Страхование">Страхование</option>
+                                </select>
+                            </div>
+                            <div id="CardName1" style="display:block;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx1", (IEnumerable<SelectListItem>)ViewBag.CardName1, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName2" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx2", (IEnumerable<SelectListItem>)ViewBag.CardName2, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName3" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx3", (IEnumerable<SelectListItem>)ViewBag.CardName3, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName4" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx4", (IEnumerable<SelectListItem>)ViewBag.CardName4, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName5" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx5", (IEnumerable<SelectListItem>)ViewBag.CardName5, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName6" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx6", (IEnumerable<SelectListItem>)ViewBag.CardName6, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName7" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx7", (IEnumerable<SelectListItem>)ViewBag.CardName7, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName8" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx8", (IEnumerable<SelectListItem>)ViewBag.CardName8, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName9" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx9", (IEnumerable<SelectListItem>)ViewBag.CardName9, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName10" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx10", (IEnumerable<SelectListItem>)ViewBag.CardName10, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName11" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx11", (IEnumerable<SelectListItem>)ViewBag.CardName11, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName12" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx12", (IEnumerable<SelectListItem>)ViewBag.CardName12, null, new { @class = "form-select" })
+                            </div>
+                            <div id="CardName13" style="display:none;" class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                @Html.DropDownList("gencodx13", (IEnumerable<SelectListItem>)ViewBag.CardName13, null, new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Имя пользователя</label>
+                                @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.UserName, null, new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Номер полощадки</label>
+                                <input type="text" class="form-control" name="IdPlatform" value="@Html.DisplayFor(model => model.IdPlatform)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ссылка</label>
+                                <input type="text" class="form-control" name="Link" value="@Html.DisplayFor(model => model.Link)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Добавить</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function fun3() {
+        var selectCombo = document.getElementById('sadsadsadv').value;
+        CardName1.style.display = 'none';
+        CardName2.style.display = 'none';
+        CardName3.style.display = 'none';
+        CardName4.style.display = 'none';
+        CardName5.style.display = 'none';
+        CardName6.style.display = 'none';
+        CardName7.style.display = 'none';
+        CardName8.style.display = 'none';
+        CardName9.style.display = 'none';
+        CardName10.style.display = 'none';
+        CardName11.style.display = 'none';
+        CardName12.style.display = 'none';
+        CardName13.style.display = 'none';
+        if (selectCombo == "Дебетовая карта") {
+            CardName1.style.display = 'block';
+        }
+        else if (selectCombo == "Кредитная карта") {
+            CardName2.style.display = 'block';
+        }
+        else if (selectCombo == "Счёт РКО") {
+            CardName3.style.display = 'block';
+        }
+        else if (selectCombo == "Микрозайм") {
+            CardName4.style.display = 'block';
+        }
+        else if (selectCombo == "Инвестиции") {
+            CardName5.style.display = 'block';
+        }
+        else if (selectCombo == "Потребительский кредит") {
+            CardName6.style.display = 'block';
+        }
+        else if (selectCombo == "Рефинансирование") {
+            CardName7.style.display = 'block';
+        }
+        else if (selectCombo == "Автокредит") {
+            CardName8.style.display = 'block';
+        }
+        else if (selectCombo == "Ипотека") {
+            CardName9.style.display = 'block';
+        }
+        else if (selectCombo == "Залоговый займ") {
+            CardName10.style.display = 'block';
+        }
+        else if (selectCombo == "Регистрация ИП, ООО") {
+            CardName11.style.display = 'block';
+        }
+        else if (selectCombo == "Страхование") {
+            CardName12.style.display = 'block';
+        }
+        else if (selectCombo == "Вклады") {
+            CardName13.style.display = 'block';
+        }
+    }
+</script>

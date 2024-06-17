@@ -1,0 +1,107 @@
+﻿@model StrongSite.Models.References
+@{
+    ViewBag.Title = "Редактирование ссылок";
+}
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Редактирование ссылок</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("ReferenceSave", "ReferenceCard", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+                            <input type="text" name="Id" value="@Html.DisplayFor(model => model.Id)" style="display:none" /><br />
+                            <input type="text" name="CardId" value="@Html.DisplayFor(model => model.CardId)" style="display:none" /><br />
+                            <div class="mb-3">
+                                <label class="form-label">Тип продукта</label>
+                                <input type="text" class="form-control" readonly value="@Html.DisplayFor(model => model.Cards_Id.ProductType)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                <input type="text" class="form-control" readonly value="@Html.DisplayFor(model => model.Cards_Id.Title)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Имя пользователя</label>
+                                @Html.DropDownList("UserId", (IEnumerable<SelectListItem>)ViewBag.UserName, null, new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Номер полощадки</label>
+                                <input type="text" class="form-control" name="IdPlatform" value="@Html.DisplayFor(model => model.IdPlatform)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ссылка</label>
+                                <input type="text" class="form-control" name="Link" value="@Html.DisplayFor(model => model.Link)"><span class="highlight"></span><span class="bar"></span>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Сохранить</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function fun3() {
+        var selectCombo = document.getElementById('sadsadsadv').value;
+        CardName1.style.display = 'none';
+        CardName2.style.display = 'none';
+        CardName3.style.display = 'none';
+        CardName4.style.display = 'none';
+        CardName5.style.display = 'none';
+        CardName6.style.display = 'none';
+        CardName7.style.display = 'none';
+        CardName8.style.display = 'none';
+        CardName9.style.display = 'none';
+        CardName10.style.display = 'none';
+        CardName11.style.display = 'none';
+        CardName12.style.display = 'none';
+        CardName13.style.display = 'none';
+        if (selectCombo == "Дебетовая карта") {
+            CardName1.style.display = 'block';
+        }
+        else if (selectCombo == "Кредитная карта") {
+            CardName2.style.display = 'block';
+        }
+        else if (selectCombo == "Счёт РКО") {
+            CardName3.style.display = 'block';
+        }
+        else if (selectCombo == "Микрозайм") {
+            CardName4.style.display = 'block';
+        }
+        else if (selectCombo == "Инвестиции") {
+            CardName5.style.display = 'block';
+        }
+        else if (selectCombo == "Потребительский кредит") {
+            CardName6.style.display = 'block';
+        }
+        else if (selectCombo == "Рефинансирование") {
+            CardName7.style.display = 'block';
+        }
+        else if (selectCombo == "Автокредит") {
+            CardName8.style.display = 'block';
+        }
+        else if (selectCombo == "Ипотека") {
+            CardName9.style.display = 'block';
+        }
+        else if (selectCombo == "Залоговый займ") {
+            CardName10.style.display = 'block';
+        }
+        else if (selectCombo == "Регистрация ИП, ООО") {
+            CardName11.style.display = 'block';
+        }
+        else if (selectCombo == "Страхование") {
+            CardName12.style.display = 'block';
+        }
+        else if (selectCombo == "Вклады") {
+            CardName13.style.display = 'block';
+        }
+    }
+</script>

@@ -1,0 +1,188 @@
+﻿@model StrongSite.Models.User
+@{
+
+    ViewBag.Title = "Профиль";
+}
+
+<div class="container py-4 py-xl-5">
+    <div class="row gy-4 row-cols-1 row-cols-md-2">
+        @if (User.IsInRole("Стажёр") || User.IsInRole("Инструктор") || User.IsInRole("Региональный менеджер") || User.IsInRole("Менеджер"))
+        {
+            <div class="col">
+                <div id="central-area" class="central-area">
+
+                    <div class="main multiple-choice">
+                        <div class="hint main-one row column">
+                            <span class="hint-text shiny-box choice clearfix">Доступно к выплате: <strong>@Html.DisplayFor(model => model.Balance)</strong></span>
+                        </div>
+                        <ol class="choices clearfix ">
+                            <a style="text-decoration:none;" href="@Url.Action("CustomerRegistry", "Customer", new { statusList = "В ожидании" })">
+                            <li class="shiny-box choice clearfix" data-choice-id="0">
+                                <img class="lfkmasui" src="~/Resources/imgBotton/Refresh.png" /><br />
+                                <span class="val ">В ожидании: <br /><strong>@ViewBag.Pending</strong></span>
+                            </li>
+                            </a>
+                            <a style="text-decoration:none;" href="@Url.Action("CustomerRegistry", "Customer", new { statusList = "Одобрена" })">
+                            <li class="shiny-box choice clearfix" data-choice-id="1">
+                                <img class="lfkmasui" src="~/Resources/imgBotton/Approve.png" /><br />
+                                <span class="val ">Одобренно: <br /><strong>@ViewBag.Apruve</strong></span>
+                            </li>
+                            </a>
+                            <a style="text-decoration:none;" href="@Url.Action("CustomerRegistry", "Customer", new { statusList = "Отклонена" })">
+                            <li class="shiny-box choice clearfix" data-choice-id="2">
+                                <img class="lfkmasui" src="~/Resources/imgBotton/Close.png" /><br />
+                                <span class="val ">Отклонено: <br /><strong>@ViewBag.Rejected</strong></span>
+                            </li>
+                            </a>
+                            <a style="text-decoration:none;" href="@Url.Action("CustomerRegistry", "Customer", new { statusList = "Оплачено" })">
+                            <li class="shiny-box choice clearfix" data-choice-id="3">
+                                <img class="lfkmasui" src="~/Resources/imgBotton/Wallet.png" /><br />
+                                <span class="val ">Оплачено: <br /><strong>@ViewBag.Pymant</strong></span>
+                            </li>
+                            </a>
+                        </ol>
+
+                        <div class="card mb-4" style="width: 99%;">
+                            <div class="card-header py-3 text-coclor-black">
+                                <h6 class="text-primary fw-bold m-0">Общая статистика</h6>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="small fw-bold">В ожидании<span class="float-end">@ViewBag.PendingProc%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-primary" aria-valuenow="@ViewBag.PendingProc" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.PendingProc%;"><span class="visually-hidden">@ViewBag.PendingProc%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Одобрено<span class="float-end">@ViewBag.ApruveProc%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar" aria-valuenow="@ViewBag.ApruveProc" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.ApruveProc%; background-color:green;"><span class="visually-hidden">@ViewBag.ApruveProc%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Отклонено<span class="float-end">@ViewBag.RejectedProc%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar" aria-valuenow="@ViewBag.RejectedProc" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.RejectedProc%; background-color:red;"><span class="visually-hidden">@ViewBag.RejectedProc%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Оплачено<span class="float-end">@ViewBag.PymantProc%</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar" aria-valuenow="@ViewBag.PymantProc" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.PymantProc%; background-color:purple;"><span class="visually-hidden">@ViewBag.PymantProc%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="col">
+            <div id="central-area" class="central-area">
+                <div class="multiple-choice">
+                    <div class="hint main-two row column">
+                        <span class="hint-text shiny-box choice clearfix">Закон вероятности: <strong>@ViewBag.Probability %</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p-4">
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Имя:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.UserName)</p>
+                    </div>
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Логин:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.Email)</p>
+                    </div>
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Пароль:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.Password)</p>
+                    </div>
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Тип пользователя:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.AccessLevel)</p>
+                    </div>
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Телефон:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.Phone)</p>
+                    </div>
+                    <div style="display:flex;">
+                        <p class="card-text dasdarrsd" style="font-weight:bold; padding-right:5px;">Баланс:</p>
+                        <p class="dasdarrsd">@Html.DisplayFor(model => model.Balance)</p>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary dsafhjy" style="width: 100%; margin-top: 10px; margin-bottom: 1.5rem;" href="@Url.Action("ChangeTheme", "Home")">Сменить цвет темы</a>
+
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .choice { /*NEW*/
+        display: inline-block;
+    }
+
+    .central-area {
+        position: relative;
+        z-index: 300;
+    }
+
+    .multiple-choice .question-row .question-text {
+        display: inline;
+        word-wrap: break-word;
+        color: #3E3E3E;
+        float: left;
+        font-family: "Times New Roman","Times","Kai","KaiTi",Serif;
+        font-size: 28px;
+        line-height: 30px;
+        padding-top: 15px;
+        width: 360px;
+    }
+
+    .main-one {
+        padding: 0px 20px 10px 10px;
+    }
+
+    .main-two {
+        padding: 0px 10px 10px 10px;
+    }
+
+    .multiple-choice .hint .hint-text {
+        display: block;
+        float: left;
+        font-size: 20px;
+        padding: 1.5rem !important;
+        padding: 10px;
+        overflow: hidden
+    }
+
+    .multiple-choice ol {
+        display: block;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .multiple-choice li {
+        width: 49%;
+        height: 175px;
+        text-align: center;
+        padding: 45px 10px 10px 10px;
+        overflow: hidden;
+        font-size: 20px;
+    }
+
+    .shiny-box {
+        background-color: white;
+        border-radius: 0.375rem;
+    }
+
+    .lfkmasui {
+        width: 30px;
+    }
+
+    .dasdarrsd {
+        font-size: 20px;
+        padding: 3px 0 10px 0;
+    }
+
+    p {
+        margin-bottom: 0px;
+    }
+</style>

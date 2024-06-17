@@ -1,0 +1,31 @@
+﻿@model IEnumerable<StrongSite.Models.Requests>
+<div class="table-wrap">
+    <table id="customers" class="record_table">
+        <thead>
+            <tr>
+                <th scope="col" style="text-align: center;">Ф.И.О.</th>
+                <th scope="col" style="text-align: center;">Телефон</th>
+                <th scope="col" style="text-align: center;">Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (StrongSite.Models.Requests item in Model)
+            {
+                <tr>
+                    <td data-label="Ф.И.О." scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td data-label="Телефон" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td data-label="Удалить" scope="row" style="text-align: center;">
+                        @using (Html.BeginForm("DeleteRequests", "Admin", new { id = item.Id }))
+                        {
+                            <input style="background: none; border: none; color: #0d6efd; text-decoration: none; cursor: pointer;" type="submit" value="Удалить" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

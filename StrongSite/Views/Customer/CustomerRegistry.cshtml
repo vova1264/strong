@@ -1,0 +1,347 @@
+﻿@using StrongSite.Models
+@using StrongSite.Helpers
+@model ModelContext
+<div class="btn-group form-inline-filter">
+    @Html.PageLinks(Model.PageViewModel, x => Url.Action("CustomerRegistry", new
+    {
+        page = x,
+        allRows = ViewBag.allRows,
+        deliteCheck = ViewBag.deliteCheck,
+        subIdList = ViewBag.subIdList,
+        creatorList = ViewBag.creatorList,
+        userList = ViewBag.userList,
+        phoneList = ViewBag.phoneList,
+        productNameList = ViewBag.productNameList,
+        dateOfCreationList = ViewBag.dateOfCreationList,
+        statusList = ViewBag.statusList,
+        statusKCList = ViewBag.statusKCList
+    }))
+    <button class="btn-filter" type="button" id="example_2_1" onclick="document.getElementById('example_2').style.display='block'; document.getElementById('example_2_1').style.display='none'; document.getElementById('example_2_2').style.display='block';" style="margin-left:10px"></button>
+    <button class="btn-filter" type="button" id="example_2_2" onclick=" document.getElementById('example_2').style.display='none'; document.getElementById('example_2_2').style.display='none'; document.getElementById('example_2_1').style.display='block';" style="margin-left:10px; display:none;"></button>
+</div>
+<form method="get" id="example_2" style="display:none;">
+    <div class="form-inline-filter">
+        @if (!User.IsInRole("Инструктор") && !User.IsInRole("Стажёр"))
+        {
+            <input name="subIdList" placeholder="SubId" class="input-filter" />
+
+        }
+        @if (!User.IsInRole("Стажёр"))
+        {
+            <input name="creatorList" placeholder="Создатель" class="input-filter" />
+        }
+        <input name="userList" placeholder="Ф.И.О." class="input-filter" />
+        <input name="phoneList" placeholder="Телефон" class="input-filter" />
+        <input name="productNameList" placeholder="Продукт" class="input-filter" />
+        <input name="dateOfCreationList" placeholder="Дата создания" class="input-filter" />
+        <select class="input-filter" name="statusList">
+            <option value="" selected disabled>Статус</option>
+            <option value="В ожидании">В ожидании</option>
+            <option value="Отклонена">Отклонена</option>
+            <option value="Списана">Списана</option>
+            <option value="Одобрена">Одобрена</option>
+            <option value="Оплачено">Оплачено</option>
+        </select>
+        <select class="input-filter" name="statusKCList">
+            <option value="" selected disabled>Статус КЦ</option>
+            <option value="В обработке">В обработке</option>
+            <option value="Активировал">Активировал</option>
+            <option value="Получил">Получил</option>
+            <option value="Отказ">Отказ</option>
+            <option value="Не дозвон">Не дозвон</option>
+            <option value="Не дозвон 2">Не дозвон 2</option>
+            <option value="Негатив">Негатив</option>
+            <option value="Не получил">Не получил</option>
+        </select>
+        <select class="input-filter" name="deliteCheck">
+            <option value="">Не удалённые</option>
+            <option value="False">Все заявки</option>
+            <option value="True">Удалённые</option>
+        </select>
+        <select class="input-filter" name="allRows">
+            <option value="False">Пагинация</option>
+            <option value="True">Все заявки</option>
+        </select>
+        <button class="blok-link-filter">
+            Фильтр
+        </button>
+    </div>
+</form>
+@if (User.IsInRole("Инструктор") || User.IsInRole("Стажёр"))
+{
+    <div class="container py-4 py-xl-5">
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            @foreach (Customers item in Model.CustomerPage)
+            {
+                <div class="col">
+                    <a href="@Url.Action("EditCustomerRegistry", "Customer", new { id = item.Id })" class="card">
+                        <div class="card-body p-4">
+                            <div class="d-flex" style="margin-bottom: 15px;">
+                                <img class="flex-shrink-0 me-3 fit-cover" style="border-radius:5px" width="80" height="50" src="~/Resources/CardsImage/@item.Cards_Id.Image">
+                                <div>
+                                    <p class="fw-bold mb-0">@item.Cards_Id.Title</p>
+                                    <p class="text-muted mb-0">@item.Cards_Id.BankName</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Клиент:</p>
+                                <p>@item.UserName</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Телефон:</p>
+                                <p>@item.Phone</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Дата:</p>
+                                <p>@item.DateOfCreation</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Комментарий:</p>
+                                <p>@item.Comment</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Оплата:</p>
+                                <p>@item.Payment ₽</p>
+                            </div>
+                            <div style="display:flex;">
+                                <p class="card-text" style="font-weight:bold; padding-right:5px;">Статус КЦ:</p>
+                                @switch (item.StatusKC)
+                                {
+                                    case "В обработке":
+                                        <p style="color:blue">@item.StatusKC</p>
+                                        break;
+                                    case "Активировал":
+                                        <p style="color:green">@item.StatusKC</p>
+                                        break;
+                                    case "Получил":
+                                        <p style="color:lawngreen">@item.StatusKC</p>
+                                        break;
+                                    case "Негатив":
+                                        <p style="color:darkred">@item.StatusKC</p>
+                                        break;
+                                    case "Отказ":
+                                        <p style="color:red">@item.StatusKC</p>
+                                        break;
+                                    case "Не получил":
+                                        <p style="color:orange">@item.StatusKC</p>
+                                        break;
+                                    case "Не дозвон":
+                                        <p style="color:olive">@item.StatusKC</p>
+                                        break;
+                                    case "Не дозвон 2":
+                                        <p style="color:purple">@item.StatusKC</p>
+                                        break;
+                                }
+                                @switch (item.Status)
+                                {
+                                    case "В ожидании":
+                                        <p style="margin-left: auto; margin-right: 0; font-weight:bold; color:blue">@item.Status</p>
+                                        break;
+                                    case "Отклонена":
+                                        <p style="margin-left: auto; margin-right: 0; font-weight: bold; color: red;">@item.Status</p>
+                                        break;
+                                    case "Списана":
+                                        <p style="margin-left: auto; margin-right: 0; font-weight: bold; color: orange;">@item.Status</p>
+                                        break;
+                                    case "Одобрена":
+                                        <p style="margin-left: auto; margin-right: 0; font-weight: bold; color: green;">@item.Status</p>
+                                        break;
+                                    case "Оплачено":
+                                        <p style="margin-left: auto; margin-right: 0; font-weight: bold; color: purple;">@item.Status</p>
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <form action="" method="post">
+        <div class="size_block">
+            <input type="submit" value="Изменить" name="action:EditCustomerRegistry" style="margin-top:0px;" class="btn btn-primary dsafhjy">
+            @if (ViewBag.deliteCheck == null || ViewBag.deliteCheck == false)
+            {
+                <input type="submit" value="Удалить" name="action:CheckCustomerRegistry" class="btn btn-primary dsafhjy">
+            }
+            @if (ViewBag.deliteCheck == true || ViewBag.deliteCheck == false)
+            {
+                <input type="submit" value="Вернуть" name="action:CheckRowsCustomerRegistry" class="btn btn-primary dsafhjy">
+            }
+
+            @if (User.IsInRole("Руководитель"))
+            {
+                <a class="btn btn-primary dsafhjy" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCustomers" title="Уничтожить">Уничтожить</a>
+                <input type="submit" value="Одобрить" name="action:ApprovedCustomerRegistry" class="btn btn-primary dsafhjy">
+                <input type="submit" value="Отклонить" name="action:RejectedCustomerRegistry" class="btn btn-primary dsafhjy">
+                <input type="submit" value="Оплатить" name="action:PaymentCustomerRegistry" class="btn btn-primary dsafhjy">
+            }
+        </div>
+        <div class="table-wrap">
+            <table id="customers" class="record_table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="text-align: center;">✔ </th>
+                        <th scope="col" style="text-align: center;">SubId</th>
+                        <th scope="col" style="text-align: center;">Ф.И.О.</th>
+                        <th scope="col" style="text-align: center;">Телефон</th>
+                        <th scope="col" style="text-align: center;">Продукт</th>
+                        <th scope="col" style="text-align: center;">Создатель</th>
+                        <th scope="col" style="text-align: center;">Дата создания</th>
+                        <th scope="col" style="text-align: center;">Коментарий</th>
+                        <th scope="col" style="text-align: center;">Оплата</th>
+                        @if (!User.IsInRole("Инструктор") && !User.IsInRole("Стажёр"))
+                        {
+                            <th scope="col" style="text-align: center;">Оплата менеджера</th>
+                        }
+                        @if (User.IsInRole("Руководитель") || User.IsInRole("Менеджер"))
+                        {
+                            <th scope="col" style="text-align: center;">ЦО</th>
+                        }
+                        <th scope="col" style="text-align: center;">Статус</th>
+                        <th scope="col" style="text-align: center;">Статус КЦ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Customers item in Model.CustomerPage)
+                    {
+                        <tr>
+                            <td scope="row" data-label="✔">
+                                <input type="checkbox" name="arrayId" value="@item.Id" />
+                            </td>
+                            <td data-label="SubId" scope="row">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td data-label="Ф.И.О." scope="row">
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td data-label="Телефон" scope="row">
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td data-label="Продукт" scope="row">
+                                @Html.DisplayFor(modelItem => item.Cards_Id.Title)
+                            </td>
+                            <td data-label="Создатель" scope="row">
+                                @Html.DisplayFor(modelItem => item.User_Id.UserName)
+                            </td>
+                            <td data-label="Дата создания" scope="row">
+                                @Html.DisplayFor(modelItem => item.DateOfCreation)
+                            </td>
+                            <td data-label="Коментарий" scope="row">
+                                @Html.DisplayFor(modelItem => item.Comment)
+                            </td>
+                            <td data-label="Оплата" scope="row">
+                                @Html.DisplayFor(modelItem => item.Payment)
+                            </td>
+                            @if (!User.IsInRole("Инструктор") && !User.IsInRole("Стажёр"))
+                            {
+                                <td data-label="Оплата менеджера" scope="row">
+                                    @Html.DisplayFor(modelItem => item.PaymentMenage)
+                                </td>
+                            }
+                            @if (User.IsInRole("Руководитель") || User.IsInRole("Менеджер"))
+                            {
+                                <td data-label="ЦО" scope="row">
+                                    @Html.DisplayFor(modelItem => item.PaymentMargin)
+                                </td>
+                            }
+                            @switch (item.Status)
+                            {
+                                case "В ожидании":
+                                    <td data-label="Статус" scope="row" style="color:blue; white-space: nowrap;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    break;
+                                case "Отклонена":
+                                    <td data-label="Статус" scope="row" style="color:red;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    break;
+                                case "Списана":
+                                    <td data-label="Статус" scope="row" style="color:orange;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    break;
+                                case "Одобрена":
+                                    <td data-label="Статус" scope="row" style="color:green;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    break;
+                                case "Оплачено":
+                                    <td data-label="Статус" scope="row" style="color:purple;">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    break;
+                            }
+                            @switch (item.StatusKC)
+                            {
+                                case "В обработке":
+                                    <td data-label="Статус КЦ" scope="row" style="color:blue; white-space: nowrap;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Активировал":
+                                    <td data-label="Статус КЦ" scope="row" style="color:green;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Получил":
+                                    <td data-label="Статус КЦ" scope="row" style="color:lawngreen;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Негатив":
+                                    <td data-label="Статус КЦ" scope="row" style="color:darkred;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Отказ":
+                                    <td data-label="Статус КЦ" scope="row" style="color:red;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Не получил":
+                                    <td data-label="Статус КЦ" scope="row" style="color:orange;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Не дозвон":
+                                    <td data-label="Статус КЦ" scope="row" style="color:olive;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                                case "Не дозвон 2":
+                                    <td data-label="Статус КЦ" scope="row" style="color:purple;">
+                                        @Html.DisplayFor(modelItem => item.StatusKC)
+                                    </td>
+                                    break;
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Модальное окно -->
+        <div class="modal fade" id="exampleModalCustomers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Подтвердите действие!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-footer" style="margin: auto;">
+                        <input type="submit" class="btn btn-primary" value="Подтвердить" name="action:DeleteCustomerRegistry" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+</style>

@@ -1,0 +1,119 @@
+﻿@model StrongSite.Models.Customers
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Редактирование заявки</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("CustomerRegistrySave", "Customer", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+                            <div style="display:none">
+                                <input type="text" name="Id" value="@Html.DisplayFor(model => model.Id)" /><br />
+                                <input type="text" name="CardId" value="@Html.DisplayFor(model => model.CardId)" /><br />
+                                <input type="text" name="UserId" value="@Html.DisplayFor(model => model.UserId)" /><br />
+                                <input type="text" name="Image" value="@Html.DisplayFor(model => model.Image)" /><br />
+                                <input type="text" name="DateOfCreation" value="@Html.DisplayFor(model => model.DateOfCreation)" /><br />
+                                <input type="text" name="Payment" value="@Html.DisplayFor(model => model.Payment)" /><br />
+                                <input type="text" name="PaymentMenage" value="@Html.DisplayFor(model => model.PaymentMenage)" /><br />
+                                <input type="text" name="PaymentMargin" value="@Html.DisplayFor(model => model.PaymentMargin)" /><br />
+                                @Html.CheckBoxFor(model => model.ConsentToProcessing, htmlAttributes: new { @checked = true, @Style = "-webkit-appearance:CheckBox;" })
+                                <input type="text" name="Status" value="@Html.DisplayFor(model => model.Status)" /><br />
+                                <input type="text" name="DateApproval" value="@Html.DisplayFor(model => model.DateApproval)" /><br />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Изображение</label>
+                                @if (Model.Image != null)
+                                {
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalImage" title="Изображение">
+                                        <div class="d-flex" style="border: 1px solid black; margin: 10px; border-radius: 20px;">
+                                            <img class="flex-shrink-0 fit-cover" style="margin: 0 auto;" width="200" height="200" src="~/Resources/CustomerImage/@Model.Image">
+                                        </div>
+                                    </a>
+                                }
+                                <input type="file" class="form-control" name="uploads">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ф.И.О.</label>
+                                <input type="text" name="UserName" value="@Html.DisplayFor(model => model.UserName)" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Дата рождения</label>
+                                <input type="text" name="BirthDate" value="@Html.DisplayFor(model => model.BirthDate)" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Телефон</label>
+                                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.Phone)" name="Phone" />
+                                <a class="form-label" href="tel:@Html.DisplayFor(model => model.Phone)">@Html.DisplayFor(model => model.Phone)</a>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Комментарий</label>
+                                @Html.DropDownList("Comment", new MultiSelectList(new string[] {
+                                Model.Comment,
+                                "Отказ",
+                                "Указать дату доставки"
+                                }), new { @class = "form-select", id = "selectComboBox", oninput = "fun3()" })
+                            </div>
+                            <div class="mb-3" id="dasda" style="display:none;">
+                                <label class="form-label"> Дата доставки</label>
+                                <input type="date" name="commentaryi" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Статус КЦ</label>
+                                @Html.DropDownList("StatusKC", new MultiSelectList(new string[] {
+                                "В обработке",
+                                "Активировал",
+                                "Получил",
+                                "Отказ",
+                                "Не дозвон",
+                                "Не дозвон 2",
+                                "Негатив",
+                                "Не получил"}), new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3" style="text-align:center;">
+                                <label class="form-label">Согласен(а) на обработку персональных данных</label>
+                                <input type="checkbox" name="ConsentToProcessing" value="coding" checked />
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary w-100" type="submit">Сохранить</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModalImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Изображение</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <img class="flex-shrink-0 fit-cover" style="width: 100%; height: 100%; object-fit: cover;" src="~/Resources/CustomerImage/@Model.Image">
+            </div>
+            <div class="modal-footer" style="margin: auto;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fun3() {
+        var selectComboBox = document.getElementById('selectComboBox').value;
+        if (selectComboBox == "Указать дату доставки")
+            dasda.style.display = 'block';
+        else
+            dasda.style.display = 'none';
+    }
+</script>

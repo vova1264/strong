@@ -1,0 +1,49 @@
+﻿@model StrongSite.Models.Cards
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Создание заявки</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        <img src="@ViewBag.QRCodeImage" alt="" style="max-height:500px; max-width:500px; height:100%;width:100%" />
+                        <div class="mb-3">
+                            <a class="btn btn-primary w-100" id="push" target="_blank" href="@ViewBag.LinkBamk">Перейти на сайт банка</a>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" id="fo" style="display:none;" formtarget="_blank" value="Перейти в реестр клиентов" class="btn btn-primary w-100" onclick="location.href='@Url.Action("CustomerRegistry", "Customer", new { cust = 1 })'" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    let isVisible = true;
+    const div = document.getElementById('fo');
+    const div1 = document.getElementById('push');
+    function trigger() {
+        isVisible = !isVisible;
+        div.style.display = isVisible ? "none" : "block";
+        div1.style.display = isVisible ? "block" : "none";
+    };
+
+    document
+        .getElementById('push')
+        .addEventListener('click', trigger);
+
+    function fun3() {
+        var selectComboBox = document.getElementById('selectComboBox').value;
+        if (selectComboBox == "Отказ")
+            dasda.style.display = 'none';
+        else
+            dasda.style.display = 'block';
+    }
+</script>

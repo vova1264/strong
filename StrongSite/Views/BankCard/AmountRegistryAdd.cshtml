@@ -1,0 +1,56 @@
+﻿@model StrongSite.Models.Cards
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">@Html.DisplayFor(model => model.Title)</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("AmountRegistrySave", "BankCard", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+                            <input type="text" style="display:none" name="Id" value="@Html.DisplayFor(model => model.Id)" /><br />
+                            <div class="mb-3">
+                                Имя пользователя<br />
+                                @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.UserName, null, new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Максимальная сумма</label>
+                                <input type="number" class="form-control" name="maxAmount" id="MaxAmount" onkeyup="validateInputs()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Вознаграждение инструктора</label>
+                                <input type="number" class="form-control" name="amount" id="Amount" onkeyup="validateInputs()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">ЦО</label>
+                                <input type="number" class="form-control" name="marginAmount" id="MarginAmount" onkeyup="validateInputs()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Вознаграждение менеджера</label>
+                                <input type="number" readonly class="form-control" id="num" onkeyup="validateInputs()">
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Добавить</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function validateInputs() {
+        const maxAmount = document.getElementById('MaxAmount');
+        const amount = document.getElementById('Amount');
+        const marginAmount = document.getElementById('MarginAmount');
+        const number = document.getElementById('num');
+        number.value = maxAmount.value - amount.value - marginAmount.value;
+    }
+</script>

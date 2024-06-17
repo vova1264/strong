@@ -1,0 +1,64 @@
+﻿@model StrongSite.Models.Cards
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Создание заявки</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("AddCustomers", "Customer", new { id = Model.Id }, FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Ф.И.О.</label>
+                                <input type="text" name="UserName" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Дата рождения</label>
+                                <input type="text" name="BirthDate" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Телефон</label>
+                                <input type="text" class="form-control" name="Phone" />
+                            </div>
+                            <div class="mb-3" style="text-align:center;">
+                                <label class="form-label">Согласен(а) на обработку персональных данных</label>
+                                <input type="checkbox" name="ConsentToProcessing" value="coding" checked />
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary w-100" type="submit">Создать заявку</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    let isVisible = true;
+    const div = document.getElementById('fo');
+    const div1 = document.getElementById('push');
+    function trigger() {
+        isVisible = !isVisible;
+        div.style.display = isVisible ? "none" : "block";
+        div1.style.display = isVisible ? "block" : "none";
+    };
+
+    document
+        .getElementById('push')
+        .addEventListener('click', trigger);
+
+    function fun3() {
+        var selectComboBox = document.getElementById('selectComboBox').value;
+        if (selectComboBox == "Отказ")
+            dasda.style.display = 'none';
+        else
+            dasda.style.display = 'block';
+    }
+</script>

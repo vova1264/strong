@@ -1,0 +1,107 @@
+﻿@model StrongSite.Models.Authentication.RegisterModel
+
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Регистрация</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm(new { @class = "text-center sdfgdse" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="mb-3">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "form-label" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "form-label" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "form-label" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "form-label" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "form-label" })
+                            </div>
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Bankcards, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Bankcards, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Bankcards, "", new { @class = "form-label" })
+                            </div>
+                            if (User.IsInRole("Руководитель"))
+                            {
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "form-label" })
+                                    @Html.DropDownList("AccessLevel", new MultiSelectList(new string[] { "Администратор", "Менеджер" }), new { @class = "form-select" })
+                                    @Html.ValidationMessageFor(model => model.AccessLevel, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            else if (User.IsInRole("Менеджер"))
+                            {
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "form-label" })
+                                    <input type="text" name="AccessLevel" value="Региональный менеджер" class="form-control" readonly />
+                                    @Html.ValidationMessageFor(model => model.AccessLevel, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            else if (User.IsInRole("Региональный менеджер"))
+                            {
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "form-label" })
+                                    @Html.DropDownList("AccessLevel", new MultiSelectList(new string[] { "Инструктор", "Стажёр" }), new { @class = "form-select" })
+                                    @Html.ValidationMessageFor(model => model.AccessLevel, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mb-3">
+                                    @Html.LabelFor(model => model.AccessLevel, htmlAttributes: new { @class = "form-label" })
+                                    <input type="text" name="AccessLevel" value="Стажёр" class="form-control" readonly />
+                                    @Html.ValidationMessageFor(model => model.AccessLevel, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Зарегистрировать</button>
+                            </div>
+                            if (ViewBag.msgRegister != null)
+                            {
+                                <div class="alert alert-success">@ViewBag.msgRegister</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    li {
+        list-style-type: none;
+    }
+
+    ul {
+        padding: 0;
+    }
+</style>

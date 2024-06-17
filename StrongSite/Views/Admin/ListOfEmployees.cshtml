@@ -1,0 +1,157 @@
+﻿@using StrongSite.Models
+@using StrongSite.Helpers
+@model ModelContext
+
+<div class="btn-group form-inline-filter">
+    @Html.PageLinks(Model.PageViewModel, x => Url.Action("ListOfEmployees", new
+    {
+        page = x,
+        emailList = ViewBag.emailList,
+        accessLevelList = ViewBag.accessLevelList,
+        userNameList = ViewBag.userNameList,
+        phoneList = ViewBag.phoneList
+    }))
+    <button class="btn-filter" type="button" id="example_2_1" onclick="document.getElementById('example_2').style.display='block'; document.getElementById('example_2_1').style.display='none'; document.getElementById('example_2_2').style.display='block';" style="margin-left:10px"></button>
+    <button class="btn-filter" type="button" id="example_2_2" onclick=" document.getElementById('example_2').style.display='none'; document.getElementById('example_2_2').style.display='none'; document.getElementById('example_2_1').style.display='block';" style="margin-left:10px; display:none;"></button>
+</div>
+
+<form method="get" id="example_2" style="display:none;">
+    <div class="form-inline-filter">
+        <input name="emailList" placeholder="Email(Логин)" class="input-filter" />
+        <input name="accessLevelList" placeholder="Тип пользователя" class="input-filter" />
+        <input name="userNameList" placeholder="Имя пользователя" class="input-filter" />
+        <input name="phoneList" placeholder="Телефон" class="input-filter" />
+        <button class="blok-link-filter">
+            Фильтр
+        </button>
+    </div>
+</form>
+<form action="" method="post">
+    <div class="size_block">
+        <input type="submit" value="Профиль" name="action:ListOfEmployeesEdit" style="margin-top:0px;" class="btn btn-primary dsafhjy">
+        <input type="submit" value="Обновить баланс" name="action:ListOfEmployeesUpdate" class="btn btn-primary dsafhjy">
+        @if (User.IsInRole("Руководитель"))
+        {
+            <a class="btn btn-primary dsafhjy" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalUser" title="Удалить">
+                Удалить
+            </a>
+            <a class="btn btn-primary dsafhjy" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalUserPayment" title="Оплать всё">
+                Оплать всё
+            </a>
+        }
+    </div>
+    <div class="table-wrap">
+        <table id="customers" class="record_table">
+            <thead>
+                <tr>
+                    <th scope="col" style="text-align: center;">✔ </th>
+                    <th scope="col" style="text-align: center;">Email(Логин)</th>
+                    <th scope="col" style="text-align: center;">Пароль</th>
+                    <th scope="col" style="text-align: center;">Тип пользователя</th>
+                    <th scope="col" style="text-align: center;">Ф.И.О.</th>
+                    <th scope="col" style="text-align: center;">Менеджер</th>
+                    <th scope="col" style="text-align: center;">Телефон</th>
+                    <th scope="col" style="text-align: center;">Номер карты</th>
+                    <th scope="col" style="text-align: center;">Баланс</th>
+                    <th scope="col" style="text-align: center;">Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User item in Model.UserPage)
+                {
+                    <tr>
+                        <td scope="row" data-label="✔">
+                            <input type="checkbox" name="arrayId" value="@item.Id" />
+                        </td>
+                        <td data-label="Email(Логин)" scope="row">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td data-label="Пароль" scope="row">
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td data-label="Тип пользователя" scope="row">
+                            @Html.DisplayFor(modelItem => item.AccessLevel)
+                        </td>
+                        <td data-label="Ф.И.О." scope="row">
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td data-label="Менеджер" scope="row">
+                            @{
+                                var it = Model.UserPage.FirstOrDefault(x => x.Id == item.UserId && (x.RoleId == 4 || x.RoleId == 5 || x.RoleId == 6));
+                                if (it != null)
+                                {
+                                    @Html.DisplayFor(modelItem => it.UserName);
+                                }
+                                else
+                                {
+                                    @Html.Label("—");
+                                }
+                            }
+                        </td>
+                        <td data-label="Телефон" scope="row">
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td data-label="Номер карты" scope="row">
+                            @Html.DisplayFor(modelItem => item.Bankcards)
+                        </td>
+                        <td data-label="Баланс" scope="row">
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        @switch (item.Status)
+                        {
+                            case "Работает":
+                                <td data-label="Статус" scope="row" style="color:green;">
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                break;
+                            case "Уволен(а)":
+                                <td data-label="Статус" scope="row" style="color:red;">
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                break;
+                            case "Не работает":
+                                <td data-label="Статус" scope="row" style="color:blue;">
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                break;
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- Модальное окно -->
+    <div class="modal fade" id="exampleModalUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Подтвердите действие!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p class="text-coclor-black">При удалении пользователя его заявки также будут безвозвратно утеряны.</p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin: auto;">
+                    <input type="submit" class="btn btn-primary" value="Подтвердить" name="action:DeleteEmployees" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="exampleModalUserPayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-coclor-black" id="exampleModalLabel">Подтвердите действие!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-footer" style="margin: auto;">
+                    <input type="submit" class="btn btn-primary" value="Подтвердить" name="action:AllPaymentCustomerRegistry" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

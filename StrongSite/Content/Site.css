@@ -1,0 +1,296 @@
+﻿.card {
+    border: none;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(22,33,54,.16);
+}
+
+.formlogin {
+    margin: 30px;
+}
+
+.sdfgdse {
+    width: 100%;
+    padding: 0px 30px 0px 30px;
+}
+
+.text-link {
+    color: gray;
+}
+
+    .text-link:hover {
+        text-decoration: none;
+    }
+
+.form-radius {
+    border-radius: 10px;
+}
+/*Кнопки под фильтром*/
+.size_block {
+    padding: 0;
+    margin: 0 0 16px 16px;
+}
+
+@media screen and (max-width: 600px) {
+    .size_block {
+        column-count: 2;
+        padding: 0 10px;
+        margin: 0px;
+    }
+
+    .dsafhjy {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+
+    .klsadjksad {
+        margin-right: 0px;
+        float: none;
+    }
+    .imgError {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .klsadjksad {
+        margin-right: 16px;
+        float: right;
+    }
+    .imgError {
+        width: 400px;
+    }
+}
+/*Кнопки под фильтром*/
+/*блок фильтров*/
+.blok-link-filter {
+    background-color: #3770b1;
+    color: white;
+    border-radius: 6px;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid white;
+}
+
+    .blok-link-filter:hover {
+        background-color: #00acff;
+        color: white;
+    }
+
+    .blok-link-filter:focus {
+        background-color: #039be5;
+        color: white;
+    }
+
+.blok-link-filter {
+    margin-top: 0;
+    padding: 10px 24px;
+}
+
+.input-filter {
+    border-radius: 8px;
+    border-width: 1px;
+    font-size: 15px;
+    padding: 10px;
+    width: auto;
+}
+
+.form-inline-filter {
+    margin: 0 0 20px 15px;
+}
+
+@media (max-width: 800px) {
+    .blfgsdf {
+        display: none;
+    }
+
+    .dropdown-menu {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .opisanie-blok {
+        margin-top: 30px;
+    }
+
+    .ppp {
+        margin: 10px 0px 10px 0px;
+    }
+
+    .ppst p {
+        margin: 10px 0px 10px 0px;
+    }
+
+    .input-filter {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .form-inline-filter {
+        margin: 0 20px 20px 15px;
+    }
+
+    .blok-link-filter {
+        width: 100%;
+    }
+}
+
+.btn-filter {
+    background-image: url("../Resources/imgBotton/Filter.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    width: 35px;
+    height: 40px;
+    border: none;
+}
+/*блок фильтров*/
+
+.form-inline-filter {
+    margin: 15px;
+}
+
+
+.col-blofas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 992px) {
+    .img-slide {
+        width: 190px;
+        padding: 5px;
+    }
+
+    .fdfdsf {
+        display: flex;
+    }
+
+    .kloerw {
+        width: 500px;
+    }
+
+    .dasda {
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width: 992px) {
+    .img-slide {
+        width: 165px;
+        padding: 5px;
+    }
+
+    .fdfdsf {
+        display: block;
+    }
+
+    .kloerw {
+        width: 250px;
+    }
+
+    .dasda {
+        padding-bottom: 0px;
+    }
+
+    .col-blofas {
+        padding: 10px 0px 10px 0px;
+    }
+}
+
+
+/*Таблица стили*/
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #3770b1;
+        color: white;
+    }
+
+.table-wrap {
+    text-align: center;
+    padding: 0 15px;
+}
+
+table {
+    border: 1px solid #ccc;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    table th, table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    table th {
+        color: black;
+        background-color: white;
+        font-size: 15px;
+        height: 50px;
+        letter-spacing: 1px;
+    }
+
+td {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+
+    .table-wrap {
+        padding: 0px;
+    }
+
+    table {
+        border: 0;
+        margin: 0 auto;
+    }
+
+        table thead {
+            display: none;
+        }
+
+        table tr {
+            border-radius: 10px;
+            margin: 12px;
+            padding: 12px;
+            display: block;
+            box-shadow: 0 1px 2px rgba(22,33,54,.16);
+        }
+
+        table td {
+            display: block;
+            text-align: right;
+            font-size: 15px;
+            padding: 3px;
+        }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+
+            table td:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+            }
+}
+/*Таблица стили*/
+

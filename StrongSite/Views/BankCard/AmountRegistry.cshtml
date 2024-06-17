@@ -1,0 +1,81 @@
+﻿@using StrongSite.Models
+@using StrongSite.Helpers
+@model ModelContext
+<div class="btn-group form-inline-filter">
+    @Html.PageLinks(Model.PageViewModel, x => Url.Action("CustomerRegistry", new
+    {
+        page = x,
+        produktList = ViewBag.produktList,
+        emailList = ViewBag.emailList,
+        userList = ViewBag.userList
+    }))
+    <button class="btn-filter" type="button" id="example_2_1" onclick="document.getElementById('example_2').style.display='block'; document.getElementById('example_2_1').style.display='none'; document.getElementById('example_2_2').style.display='block';" style="margin-left:10px"></button>
+    <button class="btn-filter" type="button" id="example_2_2" onclick=" document.getElementById('example_2').style.display='none'; document.getElementById('example_2_2').style.display='none'; document.getElementById('example_2_1').style.display='block';" style="margin-left:10px; display:none;"></button>
+</div>
+<form method="get" id="example_2" style="display:none;">
+    <div class="form-inline-filter">
+        <input name="produktList" placeholder="Продукт" class="input-filter" />
+        <input name="emailList" placeholder="Email" class="input-filter" />
+        <input name="userList" placeholder="Ф.И.О." class="input-filter" />
+        <button class="blok-link-filter">
+            Фильтр
+        </button>
+    </div>
+</form>
+
+<div class="table-wrap">
+    <table id="customers" class="record_table">
+        <thead>
+            <tr>
+                <th scope="col" style="text-align: center;">Продукт</th>
+                <th scope="col" style="text-align: center;">Email</th>
+                <th scope="col" style="text-align: center;">Ф.И.О.</th>
+                <th scope="col" style="text-align: center;">MAX Сумма</th>
+                <th scope="col" style="text-align: center;">Сумма Инструктора</th>
+                <th scope="col" style="text-align: center;">Сумма менеджера</th>
+                <th scope="col" style="text-align: center;">ЦО</th>
+                @if (User.IsInRole("Руководитель"))
+                {
+                    <th scope="col" style="text-align: center;">Удалить</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MenageBalanses item in Model.MenageBalansePage)
+            {
+                <tr>
+                    <td data-label="Продукт" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Cards_Id.Title)
+                    </td>
+                    <td data-label="Email" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.User_Id.Email)
+                    </td>
+                    <td data-label="Ф.И.О." scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.User_Id.UserName)
+                    </td>
+                    <td data-label="MAX Сумма" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.MaxAmount)
+                    </td>
+                    <td data-label="Сумма Инструктора" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td data-label="Сумма менеджера" scope="row" style="text-align: center;">
+                        @(item.MaxAmount - item.Amount - item.MarginAmount)
+                    </td>
+                    <td data-label="ЦО" scope="row" style="text-align: center;">
+                        @Html.DisplayFor(modelItem => item.MarginAmount)
+                    </td>
+                    @if (User.IsInRole("Руководитель"))
+                    {
+                        <td data-label="Удалить" scope="row" style="text-align: center;">
+                            @using (Html.BeginForm("AmountRegistryDelete", "BankCard", new { id = item.Id }))
+                            {
+                                <input style="background: none; border: none; color: #0d6efd; text-decoration: none; cursor: pointer;" type="submit" value="Удалить" />
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

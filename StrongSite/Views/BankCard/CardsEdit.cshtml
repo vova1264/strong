@@ -1,0 +1,73 @@
+﻿@model StrongSite.Models.Cards
+
+<section class="position-relative py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 class="text-coclor">Изменение продукта</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5 form-radius">
+                    <div class="card-body formlogin d-flex flex-column">
+                        @using (Html.BeginForm("CardsSave", "BankCard", FormMethod.Post, new { @class = "formStyle", @enctype = "multipart/form-data" }))
+                        {
+                            <input type="text" style="display:none" name="Id" value="@Html.DisplayFor(model => model.Id)" /><br />
+                            <input type="text" style="display:none" name="Image" value="@Html.DisplayFor(model => model.Image)" /><br />
+                            <input type="text" style="display:none" name="DelitedCheck" value="@Html.DisplayFor(model => model.DelitedCheck)" /><br />
+                            <div class="mb-3">
+                                <label class="form-label">Изображение</label>
+                                <input class="form-control" type="file" name="uploads">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Название карты</label>
+                                <input type="text" class="form-control" name="Title" value="@Html.DisplayFor(model => model.Title)" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Название банка</label>
+                                <input type="text" class="form-control" name="BankName" value="@Html.DisplayFor(model => model.BankName)" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Тип продукта</label>
+                                @Html.DropDownList("ProductType", new MultiSelectList(new string[] {
+                                   "Дебетовая карта",
+                                   "Кредитная карта",
+                                   "Счёт РКО",
+                                   "Микрозайм",
+                                   "Инвестиции",
+                                   "Вклады",
+                                   "Потребительский кредит",
+                                   "Рефинансирование",
+                                   "Автокредит",
+                                   "Ипотека",
+                                   "Залоговый займ",
+                                   "Регистрация ИП, ООО",
+                                   "Страхование",}), new { @class = "form-select" })
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Описание 1</label>
+                                <input type="text" class="form-control" name="DescriptionOne" value="@Html.DisplayFor(model => model.DescriptionOne)" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Описание 2</label>
+                                <input type="text" class="form-control" name="DescriptionTwo" value="@Html.DisplayFor(model => model.DescriptionTwo)" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Описание 3</label>
+                                <input type="text" class="form-control" name="DescriptionThree" value="@Html.DisplayFor(model => model.DescriptionThree)" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Описание 4</label>
+                                <input type="text" class="form-control" name="DescriptionFour" value="@Html.DisplayFor(model => model.DescriptionFour)" />
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary d-block w-100" type="submit">Сохранить</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
